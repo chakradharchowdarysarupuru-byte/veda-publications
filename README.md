@@ -17,17 +17,17 @@ Full plan and checks: `GO_LIVE_SPEC.md`. Never commit secrets; this repo is publ
    ```
 
    `import:books` loads the 15 titles from `backend/data/books.json` and is safe to rerun.
-3. **Vercel API project.** Import this repo with **Root Directory `backend`**. Environment variables: `DATABASE_PROVIDER=supabase`, `SUPABASE_URL`, `SUPABASE_SECRET_KEY`, `JWT_SECRET` (`openssl rand -hex 32`), `CORS_ORIGINS` (exact website URL, e.g. `https://veda-publications.vercel.app`; comma-separate several).
-4. **Vercel website project.** Import the repo again with the root directory left as is. Set `NEXT_PUBLIC_API_URL` to the API project's URL.
-5. **Redeploy the API** after the website URL is known so `CORS_ORIGINS` is right, then check: only published books show publicly, admin sign-in works, a wrong password fails, and add/edit/delete work.
+3. **Vercel project.** Import this repo once with the root directory left as is. `vercel.json` defines the Next.js `app` and Express `backend` services; `/api/*` routes to the API and all other paths route to the site.
+4. Set backend service environment variables: `DATABASE_PROVIDER=supabase`, `SUPABASE_URL`, `SUPABASE_SECRET_KEY`, and `JWT_SECRET` (`openssl rand -hex 32`). Browser calls use same-origin `/api`; no frontend API URL or CORS allowlist is needed.
+5. Check on a preview deploy: only published books show publicly, admin sign-in works, a wrong password fails, and add/edit/delete work.
 
-Supabase keys belong only in the API project, never in a `NEXT_PUBLIC_*` variable.
+Supabase keys belong only in the backend service, never in a `NEXT_PUBLIC_*` variable.
 
 ## Change the admin login ID or password
 
 There is one Chief Editor account. Put the new `CHIEF_EDITOR_EMAIL`, `CHIEF_EDITOR_PASSWORD` (12–72 characters) and optional `CHIEF_EDITOR_NAME` in `backend/.env` alongside the Supabase settings from step 2, then run `cd backend && npm run seed:editor`. It replaces the existing account's details; the old login stops working immediately. Delete the password from `.env` afterwards.
 
-Existing sign-ins last up to 8 hours. To sign everyone out at once, change `JWT_SECRET` in the API project and redeploy.
+Existing sign-ins last up to 8 hours. To sign everyone out at once, change the backend service's `JWT_SECRET` and redeploy.
 
 ## Books
 

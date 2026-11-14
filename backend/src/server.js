@@ -35,14 +35,27 @@ const ensureConnected = () => {
   return connection;
 };
 
-app.use(cors({
-  origin(origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      return callback(null, true);
+app.use((req, res, next) => {
+  const origin = req.get("origin");
+  if (origin) {
+    try {
+      if (new URL(origin).host === req.get("host")) {
+        return next();
+      }
+    } catch {
+      // Invalid origins are rejected by the CORS middleware below.
     }
-    return callback(new Error("Origin not allowed."));
-  },
-}));
+  }
+
+  return cors({
+    origin(requestOrigin, callback) {
+      if (!requestOrigin || allowedOrigins.includes(requestOrigin)) {
+        return callback(null, true);
+      }
+      return callback(new Error("Origin not allowed."));
+    },
+  })(req, res, next);
+});
 app.use(express.json());
 
 app.get("/", (req, res) => {

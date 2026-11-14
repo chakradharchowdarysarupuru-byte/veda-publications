@@ -2,7 +2,7 @@
 
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
-import API_URL from "@/lib/api";
+import API_BASE_PATH from "@/lib/api";
 
 export default function ChiefEditorLoginPage() {
   const router = useRouter();
@@ -17,7 +17,7 @@ export default function ChiefEditorLoginPage() {
     setSubmitting(true);
 
     try {
-      const response = await fetch(`${API_URL}/api/auth/login`, {
+      const response = await fetch(`${API_BASE_PATH}/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),

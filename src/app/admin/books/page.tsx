@@ -3,7 +3,7 @@
 import { FormEvent, useEffect, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import API_URL from "@/lib/api";
+import API_BASE_PATH from "@/lib/api";
 
 type Book = {
   _id: string;
@@ -57,8 +57,8 @@ export default function AdminBooksPage() {
       try {
         const headers = { Authorization: `Bearer ${token}` };
         const [identityResponse, booksResponse] = await Promise.all([
-          fetch(`${API_URL}/api/auth/me`, { headers, cache: "no-store" }),
-          fetch(`${API_URL}/api/books/admin`, { headers, cache: "no-store" }),
+          fetch(`${API_BASE_PATH}/auth/me`, { headers, cache: "no-store" }),
+          fetch(`${API_BASE_PATH}/books/admin`, { headers, cache: "no-store" }),
         ]);
 
         if (identityResponse.status === 401 || booksResponse.status === 401 || booksResponse.status === 403) {
@@ -125,7 +125,7 @@ export default function AdminBooksPage() {
     setSubmitting(true);
     try {
       const response = await fetch(
-        `${API_URL}/api/books${editingId ? `/${editingId}` : ""}`,
+        `${API_BASE_PATH}/books${editingId ? `/${editingId}` : ""}`,
         {
           method: editingId ? "PUT" : "POST",
           headers: {
@@ -196,7 +196,7 @@ export default function AdminBooksPage() {
     setNotice("");
 
     try {
-      const response = await fetch(`${API_URL}/api/books/${book._id}`, {
+      const response = await fetch(`${API_BASE_PATH}/books/${book._id}`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
       });

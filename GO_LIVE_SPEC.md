@@ -11,8 +11,8 @@ The catalogue and Chief Editor admin run live on Vercel, backed by Supabase. The
 
 | Part | Host | Notes |
 |---|---|---|
-| Next.js site | Vercel project 1 (repo root) | `NEXT_PUBLIC_API_URL` points at project 2 |
-| Express API | Vercel project 2 (root dir `backend`) | Runs as one Vercel function; keeps the same routes |
+| Next.js site | Vercel project (service root `.`) | Public site routes; browser API calls use same-origin `/api` |
+| Express API | Vercel project (service root `backend`) | Public only through `/api/*`; runs as one Vercel function |
 | Database | Supabase, Mumbai (`ap-south-1`) | Free tier; backend-only secret key |
 
 ## Work
@@ -22,7 +22,7 @@ The catalogue and Chief Editor admin run live on Vercel, backed by Supabase. The
 3. **Express on Vercel.** Export the app from `server.js`, calling `listen` only locally; connect once per cold start; set `trust proxy` so the limiter sees real IPs. Docker Compose still works locally.
 4. **Data.** Local MongoDB is the only Mongo copy, and Docker isn't running. If it holds edits, back it up and run `migrate:supabase --execute --backup-confirmed`. If not, run `import:books` against Supabase from `backend/data/books.json` (15 titles). Check the counts and the IDs either way.
 5. **Admin login.** The owner types `CHIEF_EDITOR_EMAIL`, `CHIEF_EDITOR_PASSWORD` (12–72 characters) and `CHIEF_EDITOR_NAME` straight into the backend environment. Claude never sees them. Run `seed:editor` once against Supabase, then remove the password variable from Vercel. The bcrypt hash in the database is enough.
-6. **Vercel env.** Backend: `DATABASE_PROVIDER=supabase`, `SUPABASE_URL`, `SUPABASE_SECRET_KEY`, `JWT_SECRET` (32+ bytes), `CORS_ORIGINS` (exact site URL). Frontend: `NEXT_PUBLIC_API_URL`. Secrets go only into the Vercel dashboard; Claude never asks for values.
+6. **Vercel env.** Set backend service variables: `DATABASE_PROVIDER=supabase`, `SUPABASE_URL`, `SUPABASE_SECRET_KEY`, and `JWT_SECRET` (32+ bytes). Same-origin requests do not need a frontend API URL or CORS allowlist. Secrets go only into the Vercel dashboard; Claude never asks for values.
 7. **Verify on a preview deploy.** Only published books are public; login works and a wrong password fails; create, edit and delete work; bad tokens are rejected; no Supabase key is in the browser bundle.
 8. **Promote to production.** Retire MongoDB from the production config, but keep the code path and backup for 30 days as the rollback route.
 

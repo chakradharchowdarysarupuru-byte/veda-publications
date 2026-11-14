@@ -9,7 +9,7 @@
     "import:books": "node scripts/importBookCatalog.js",
     "seed:editor": "node scripts/seedChiefEditor.js",
     "migrate:supabase": "node scripts/migrateMongoToSupabase.js",
-    "test": "node --test src/config/dataStore.test.js"
+    "test": "node --test"
   },
   "keywords": [],
   "author": "",

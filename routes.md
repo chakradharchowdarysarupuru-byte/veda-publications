@@ -10,6 +10,7 @@
 - /cart and /checkout — redirect to /books; no order flow is implemented.
 
 ## Backend API (port 5000 in container; host port 5001 in local Compose)
+- Vercel routes `/api/*` to the backend service; all other public paths go to the frontend service.
 - GET / — API health response.
 - GET /api/books — published books.
 - GET /api/books/admin — all books; Chief Editor JWT required.

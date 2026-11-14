@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { ArrowRight, ArrowUpRight, BookOpen, Mail, MessageCircle, Search, X } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
-import API_URL from "@/lib/api";
+import API_BASE_PATH from "@/lib/api";
 import { hasDistinctSynopsis } from "@/lib/bookText";
 import {
   getBookContactHref,
@@ -35,7 +35,7 @@ export default function BooksPage() {
   useEffect(() => {
     const controller = new AbortController();
 
-    fetch(`${API_URL}/api/books`, { cache: "no-store", signal: controller.signal })
+    fetch(`${API_BASE_PATH}/books`, { cache: "no-store", signal: controller.signal })
       .then(async (response) => {
         const data = await response.json();
         if (!response.ok || !data.success) {
