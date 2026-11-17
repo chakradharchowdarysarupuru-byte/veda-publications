@@ -2,6 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight, Award, BookOpen, Check, ChevronRight, Globe, Lightbulb, Mail, MapPin, MessageCircle, Microscope, Phone, Quote, Sparkles, Telescope, Users } from "lucide-react";
 import FeaturedBooks from "@/components/books/FeaturedBooks";
+import JournalCard from "@/components/journals/JournalCard";
+import { JOURNALS } from "@/lib/journals";
 import Footer from "@/components/footer/Footer";
 import HeroBookSplash from "@/components/home/HeroBookSplash";
 import {
@@ -94,6 +96,31 @@ export default function Home() {
       </section>
 
       <FeaturedBooks />
+
+      <section id="journals" aria-labelledby="journals-heading" className="scroll-mt-28 bg-[#F7F4ED] px-6 py-20 lg:px-10">
+        <div className="mx-auto max-w-[1440px]">
+          <div className="flex flex-wrap items-end justify-between gap-6">
+            <div>
+              <h2 id="journals-heading" className="font-serif text-4xl italic leading-tight text-[#681F2A] sm:text-5xl">Our Journals</h2>
+              <p className="mt-3 max-w-2xl text-base leading-7 text-[#3D3D3D]">
+                Scholarly journals that foster academic dialogue and original research.
+              </p>
+            </div>
+            <Link
+              href="/books?tab=journals"
+              className="inline-flex min-h-11 items-center gap-2 rounded-full border border-[#681F2A] px-6 py-2 text-xs font-semibold uppercase tracking-[0.1em] text-[#681F2A] hover:bg-[#681F2A] hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#681F2A]"
+            >
+              Explore All Journals
+              <ChevronRight aria-hidden="true" className="size-4" />
+            </Link>
+          </div>
+          <div className="mt-10 grid gap-8 md:grid-cols-2 xl:grid-cols-3">
+            {JOURNALS.map((journal) => (
+              <JournalCard key={journal.id} journal={journal} />
+            ))}
+          </div>
+        </div>
+      </section>
 
       <section id="vision" className="scroll-mt-28 relative overflow-hidden bg-[#681F2A] px-6 py-20 text-[#F7F4ED] sm:py-24 lg:px-10">
         <div aria-hidden="true" className="pointer-events-none absolute -left-24 -top-24 size-80 rounded-full bg-[#B9975B]/20 blur-3xl" />

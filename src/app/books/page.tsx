@@ -2,7 +2,10 @@
 
 import Image from "next/image";
 import { ArrowRight, ArrowUpRight, BookOpen, Mail, MessageCircle, Search, X } from "lucide-react";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { Suspense, useEffect, useMemo, useRef, useState, type KeyboardEvent as ReactKeyboardEvent } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import JournalCard from "@/components/journals/JournalCard";
+import { JOURNALS } from "@/lib/journals";
 import API_BASE_PATH from "@/lib/api";
 import { hasDistinctSynopsis } from "@/lib/bookText";
 import {
@@ -21,7 +24,49 @@ type Book = {
   coverImageUrl: string;
 };
 
+type CatalogueTab = "books" | "journals";
+const TABS: { id: CatalogueTab; label: string }[] = [
+  { id: "books", label: "Books" },
+  { id: "journals", label: "Journals" },
+];
+
 export default function BooksPage() {
+  return (
+    <Suspense fallback={null}>
+      <BooksPageContent />
+    </Suspense>
+  );
+}
+
+function BooksPageContent() {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const activeTab: CatalogueTab = searchParams.get("tab") === "journals" ? "journals" : "books";
+  const tabRefs = useRef<Record<CatalogueTab, HTMLButtonElement | null>>({ books: null, journals: null });
+
+  const selectTab = (tab: CatalogueTab) => {
+    const params = new URLSearchParams(searchParams.toString());
+    if (tab === "journals") params.set("tab", "journals");
+    else params.delete("tab");
+    const query = params.toString();
+    router.replace(query ? `${pathname}?${query}` : pathname, { scroll: false });
+  };
+
+  const handleTabKeyDown = (event: ReactKeyboardEvent<HTMLButtonElement>) => {
+    const index = TABS.findIndex((tab) => tab.id === activeTab);
+    let next = -1;
+    if (event.key === "ArrowRight") next = (index + 1) % TABS.length;
+    else if (event.key === "ArrowLeft") next = (index - 1 + TABS.length) % TABS.length;
+    else if (event.key === "Home") next = 0;
+    else if (event.key === "End") next = TABS.length - 1;
+    if (next < 0) return;
+    event.preventDefault();
+    const target = TABS[next].id;
+    selectTab(target);
+    tabRefs.current[target]?.focus();
+  };
+
   const [books, setBooks] = useState<Book[]>([]);
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("All");
@@ -145,6 +190,35 @@ export default function BooksPage() {
         </div>
       </section>
 
+      <div className="border-t border-[#111111]/10 px-4 sm:px-6 lg:px-10">
+        <div className="mx-auto max-w-[1440px]">
+          <div role="tablist" aria-label="Catalogue sections" className="flex gap-2 py-4">
+            {TABS.map((tab) => (
+              <button
+                key={tab.id}
+                ref={(node) => { tabRefs.current[tab.id] = node; }}
+                id={`tab-${tab.id}`}
+                type="button"
+                role="tab"
+                aria-selected={activeTab === tab.id}
+                aria-controls={`panel-${tab.id}`}
+                tabIndex={activeTab === tab.id ? 0 : -1}
+                onClick={() => selectTab(tab.id)}
+                onKeyDown={handleTabKeyDown}
+                className={`min-h-11 rounded-full px-6 py-2 text-xs font-semibold uppercase tracking-[0.12em] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#681F2A] ${
+                  activeTab === tab.id
+                    ? "bg-[#681F2A] text-white"
+                    : "border border-[#6B675F] text-[#5F5A52] hover:border-[#681F2A] hover:text-[#681F2A]"
+                }`}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div role="tabpanel" id="panel-books" aria-labelledby="tab-books" hidden={activeTab !== "books"}>
       <section aria-label="Filter catalogue" className="sticky top-28 z-30 border-y border-[#111111]/10 bg-[#F7F4ED]/95 px-4 py-4 backdrop-blur-md sm:px-6 lg:px-10">
         <div className="mx-auto flex max-w-[1440px] items-center gap-3 sm:gap-5">
           <div className="relative w-[48%] min-w-32 max-w-[24rem] shrink-0">
@@ -279,6 +353,19 @@ export default function BooksPage() {
           )}
         </div>
       </section>
+      </div>
+
+      <div role="tabpanel" id="panel-journals" aria-labelledby="tab-journals" hidden={activeTab !== "journals"}>
+        <section aria-label="Journals" className="px-6 py-16 lg:px-10 lg:py-20">
+          <div className="mx-auto max-w-[1440px]">
+            <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">
+              {JOURNALS.map((journal) => (
+                <JournalCard key={journal.id} journal={journal} />
+              ))}
+            </div>
+          </div>
+        </section>
+      </div>
 
       {selectedBook && (
         <div

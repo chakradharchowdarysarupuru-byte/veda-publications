@@ -61,6 +61,9 @@ export default function Footer() {
             <Link href="/books" className="mt-5 inline-block text-sm text-white underline decoration-white/30 underline-offset-4 hover:text-[#B9975B]">
               Browse books
             </Link>
+            <Link href="/books?tab=journals" className="mt-3 block w-fit text-sm text-white underline decoration-white/30 underline-offset-4 hover:text-[#B9975B]">
+              Browse journals
+            </Link>
           </div>
         </div>
         <p className="pt-6 text-xs text-white/50">© {new Date().getFullYear()} Veda Publications.</p>
