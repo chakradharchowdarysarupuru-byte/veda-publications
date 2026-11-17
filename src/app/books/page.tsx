@@ -250,6 +250,7 @@ export default function BooksPage() {
                         <div className="flex h-[82%] w-[62%] flex-col justify-end bg-[#111111] p-6 text-[#F7F4ED]">
                           <h2 className="font-serif text-2xl">{book.title}</h2>
                           <p className="mt-3 text-xs text-white/70">{book.author}</p>
+                          {book.isbn && <p className="mt-1 text-xs text-white/70">ISBN: {book.isbn}</p>}
                         </div>
                       )}
                       {book.category && (
@@ -261,6 +262,7 @@ export default function BooksPage() {
                     <div className="flex flex-1 flex-col p-5 sm:p-6">
                       <h2 className="font-serif text-2xl leading-tight">{book.title}</h2>
                       {book.author && <p className="mt-2 text-sm leading-6 text-[#5F5A52]">{book.author}</p>}
+                      {book.isbn && <p className="mt-1 text-xs text-[#5F5A52]">ISBN: {book.isbn}</p>}
                       {book.synopsis && <p className="mt-4 line-clamp-3 text-sm leading-6 text-[#5F5A52]">{book.synopsis}</p>}
                       <button
                         type="button"

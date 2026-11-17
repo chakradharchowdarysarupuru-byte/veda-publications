@@ -157,7 +157,7 @@ export default function FeaturedBooks() {
   };
   const selectedBookWhatsAppHref = selectedBook
     ? getWhatsAppContactHref(
-        `Hello, I would like to ask about "${selectedBook.title}"${selectedBook.author ? ` by ${selectedBook.author}` : ""}.`
+        `Hello, I would like to ask about "${selectedBook.title}"${selectedBook.author ? ` by ${selectedBook.author}` : ""}${selectedBook.isbn ? ` (ISBN ${selectedBook.isbn})` : ""}.`
       )
     : "";
 
@@ -308,6 +308,7 @@ export default function FeaturedBooks() {
                     <div className="flex min-w-0 flex-1 flex-col items-start py-1">
                       <h3 className="font-serif text-2xl leading-tight sm:text-3xl">{book.title}</h3>
                       {book.author && <p className="mt-3 text-base leading-7 text-[#5F5A52]">{book.author}</p>}
+                      {book.isbn && <p className="mt-1 text-sm text-[#5F5A52]">ISBN: {book.isbn}</p>}
                       <button
                         type="button"
                         aria-haspopup="dialog"
@@ -362,6 +363,7 @@ export default function FeaturedBooks() {
                 )}
                 <h2 id="featured-abstract-title" className="mt-3 font-serif text-3xl sm:text-4xl">{selectedBook.title}</h2>
                 {selectedBook.author && <p className="mt-2 text-sm text-[#5F5A52]">{selectedBook.author}</p>}
+                {selectedBook.isbn && <p className="mt-1 text-xs text-[#5F5A52]">ISBN: {selectedBook.isbn}</p>}
               </div>
               <button
                 ref={abstractCloseButtonRef}

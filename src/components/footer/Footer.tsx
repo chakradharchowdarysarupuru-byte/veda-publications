@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import {
-  BOOK_CONTACT_EMAIL,
+  PUBLISHER_EMAILS,
   PUBLISHER_PHONE_NUMBERS,
   getWhatsAppContactHref,
 } from "@/lib/bookContact";
@@ -33,12 +33,17 @@ export default function Footer() {
           </div>
           <div>
             <h2 className="text-xs font-semibold uppercase tracking-[0.2em] text-[#B9975B]">Contact</h2>
-            <a
-              href={`mailto:${BOOK_CONTACT_EMAIL}`}
-              className="mt-5 inline-block text-sm text-white underline decoration-white/30 underline-offset-4 hover:text-[#B9975B]"
-            >
-              {BOOK_CONTACT_EMAIL}
-            </a>
+            <div className="mt-5 space-y-1">
+              {PUBLISHER_EMAILS.map((email) => (
+                <a
+                  key={email}
+                  href={`mailto:${email}`}
+                  className="block break-all text-sm text-white underline decoration-white/30 underline-offset-4 hover:text-[#B9975B]"
+                >
+                  {email}
+                </a>
+              ))}
+            </div>
             <div className="mt-3 flex flex-wrap gap-x-5 gap-y-2">
               {PUBLISHER_PHONE_NUMBERS.map((phone) => (
                 <a key={phone.href} href={phone.href} className="text-sm text-white underline decoration-white/30 underline-offset-4 hover:text-[#B9975B]">

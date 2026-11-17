@@ -27,7 +27,7 @@ export default function HeroBookSplash() {
   return (
     <div
       aria-hidden="true"
-      className="pointer-events-none absolute -right-16 bottom-[-1rem] top-auto h-48 w-48 translate-y-0 opacity-35 sm:right-0 sm:h-60 sm:w-60 sm:opacity-50 md:right-0 md:top-[18%] md:bottom-auto md:h-[74%] md:w-[43%] md:translate-y-0 md:opacity-100"
+      className="pointer-events-none absolute -right-16 bottom-[-1rem] top-auto h-56 w-56 translate-y-0 opacity-35 sm:right-0 sm:h-72 sm:w-72 sm:opacity-50 md:right-0 md:top-[12%] md:bottom-auto md:h-[86%] md:w-[48%] md:translate-y-0 md:opacity-100"
     >
       <div className="absolute left-1/2 top-1/2 h-[72%] w-[72%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#E8D8C8]/70 blur-2xl" />
       <div className="absolute inset-[7%]">
@@ -36,7 +36,7 @@ export default function HeroBookSplash() {
             key={cover.src}
             className={`absolute aspect-[3/4] overflow-hidden rounded-[2px] border-[3px] border-white/90 bg-[#F7F4ED] shadow-[0_18px_38px_rgba(35,25,20,0.24)] ${cover.className}`}
           >
-            <Image src={cover.src} alt="" fill sizes="(max-width: 768px) 110px, 220px" className="object-cover" />
+            <Image src={cover.src} alt="" fill sizes="(max-width: 768px) 130px, 280px" className="object-cover" />
           </div>
         ))}
       </div>

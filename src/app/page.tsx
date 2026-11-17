@@ -6,6 +6,7 @@ import Footer from "@/components/footer/Footer";
 import HeroBookSplash from "@/components/home/HeroBookSplash";
 import {
   BOOK_CONTACT_EMAIL,
+  PUBLISHER_EMAILS,
   PUBLISHER_PHONE_NUMBERS,
   getWhatsAppContactHref,
 } from "@/lib/bookContact";
@@ -21,14 +22,17 @@ export default function Home() {
         <HeroBookSplash />
         <div aria-hidden="true" className="pointer-events-none absolute -right-28 top-1/4 h-96 w-96 rounded-full bg-[#B9975B]/10 blur-3xl" />
         <div className="relative z-10 mx-auto w-full max-w-[1440px]">
-          <p className="mb-7 text-xs font-semibold uppercase tracking-[0.3em] text-[#681F2A]">
+          <p className="mb-7 text-base font-semibold uppercase tracking-[0.3em] text-[#681F2A] sm:text-lg lg:text-xl">
             Veda Publications
           </p>
-          <h1 className="max-w-4xl font-serif text-6xl leading-[0.98] tracking-[-0.04em] text-[#111111] sm:text-7xl lg:max-w-[58%] lg:text-8xl">
-            A catalogue of <span className="text-[#681F2A] italic">published books.</span>
+          <p className="-mt-4 mb-7 font-serif text-xl italic text-[#5F5A52] sm:text-2xl">
+            The writer’s choice
+          </p>
+          <h1 className="max-w-4xl font-serif text-5xl leading-[0.98] tracking-[-0.04em] text-[#111111] sm:text-6xl lg:max-w-[52%] lg:text-7xl">
+            Your ideas deserve <span className="text-[#681F2A] italic">a wider audience.</span>
           </h1>
           <p className="mt-8 max-w-2xl text-base leading-8 text-[#5F5A52] sm:text-lg lg:max-w-[48%]">
-            Browse titles from Veda Publications, read book abstracts, and contact the publisher with a question or enquiry.
+            Advancing Scholarship. Publishing Ideas. Connecting Minds.
           </p>
           <Link
             href="/books"
@@ -46,6 +50,15 @@ export default function Home() {
       </section>
 
       <FeaturedBooks />
+
+      <section id="vision" className="scroll-mt-28 bg-[#F7F4ED] px-6 pb-20 pt-4 lg:px-10">
+        <div className="mx-auto max-w-[1440px] border-t border-[#6B675F]/30 pt-12">
+          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#681F2A]">Our Vision</p>
+          <p className="mt-6 max-w-4xl font-serif text-2xl leading-snug text-[#111111] sm:text-3xl lg:text-4xl">
+            To become a respected academic and literary publishing house that advances knowledge, inspires intellectual creativity, promotes research excellence, and provides a meaningful platform for diverse scholarly and literary voices across the world.
+          </p>
+        </div>
+      </section>
 
       <section id="about" className="scroll-mt-28 bg-[#EDE8DD] px-6 py-20 lg:px-10">
         <div className="mx-auto max-w-[1440px]">
@@ -65,7 +78,7 @@ export default function Home() {
                   Dr Kambham John Wesley Sasikanth
                 </h3>
                 <p className="mt-4 max-w-3xl text-base leading-7 text-[#3D3D3D]">
-                  Dr Sasikanth’s work brings together pastoral ministry, teaching, and editorial leadership. He serves as Pastor at Calvary Sakthi Church and Faith and Deeds Ministries, and as Associate Professor of English at VVIT University, Nambur.
+                  Dr. John Wesley Sasikanth is an accomplished academic, researcher, author, editor, and orator with extensive experience in higher education, literary scholarship, publishing, and public engagement. His academic and intellectual pursuits span English Language Teaching, literature, interdisciplinary research, theology, and social thought. Through his contributions to education, research, publishing, and public speaking, he is committed to advancing knowledge, nurturing intellectual growth, and inspiring society.
                 </p>
                 <ul className="mt-5 space-y-2 text-sm leading-6 text-[#3D3D3D]">
                   <li><span className="font-semibold text-[#111111]">Editor-in-Chief:</span> Biblical Studies Journal (BSJ)</li>
@@ -80,18 +93,19 @@ export default function Home() {
               <div className="mt-9 rounded-xl border border-[#6B675F]/40 bg-[#F7F4ED]/70 p-5 sm:p-6">
                 <h3 className="font-serif text-2xl">Contact the publisher</h3>
                 <div className="mt-5 space-y-4">
-                  <a
-                    href={`mailto:${BOOK_CONTACT_EMAIL}`}
-                    className="flex min-h-12 items-center gap-3 text-[#681F2A] hover:text-[#42131A]"
-                  >
-                    <span className="grid size-10 shrink-0 place-items-center rounded-full bg-[#681F2A]/10">
+                  <div className="flex min-h-12 items-center gap-3">
+                    <span className="grid size-10 shrink-0 place-items-center rounded-full bg-[#681F2A]/10 text-[#681F2A]">
                       <Mail aria-hidden="true" className="size-5" />
                     </span>
                     <span className="min-w-0">
                       <span className="block text-xs font-semibold uppercase tracking-[0.12em] text-[#5F5A52]">Email</span>
-                      <span className="break-all font-medium underline decoration-[#681F2A]/40 underline-offset-4">{BOOK_CONTACT_EMAIL}</span>
+                      {PUBLISHER_EMAILS.map((email) => (
+                        <a key={email} href={`mailto:${email}`} className="block break-all font-medium text-[#681F2A] underline decoration-[#681F2A]/40 underline-offset-4 hover:text-[#42131A]">
+                          {email}
+                        </a>
+                      ))}
                     </span>
-                  </a>
+                  </div>
                   <div className="flex min-h-12 items-center gap-3">
                     <span className="grid size-10 shrink-0 place-items-center rounded-full bg-[#681F2A]/10 text-[#681F2A]">
                       <Phone aria-hidden="true" className="size-5" />
@@ -217,19 +231,20 @@ export default function Home() {
                 <p className="mt-2 text-sm leading-6 text-[#5F5A52]">Publisher · Veda Publications</p>
 
                 <div className="mt-7 divide-y divide-[#6B675F]/20 border-y border-[#6B675F]/20">
-                  <a
-                    href={`mailto:${BOOK_CONTACT_EMAIL}`}
-                    className="group flex min-h-[76px] items-center gap-4 py-4"
-                  >
-                    <span className="grid size-11 shrink-0 place-items-center rounded-full bg-[#681F2A]/10 text-[#681F2A] transition-colors group-hover:bg-[#681F2A] group-hover:text-white">
+                  <div className="flex min-h-[76px] items-start gap-4 py-4">
+                    <span className="mt-1 grid size-11 shrink-0 place-items-center rounded-full bg-[#681F2A]/10 text-[#681F2A]">
                       <Mail aria-hidden="true" className="size-5" />
                     </span>
-                    <span className="min-w-0 flex-1">
+                    <div className="min-w-0 flex-1">
                       <span className="block text-xs font-semibold uppercase tracking-[0.14em] text-[#6B675F]">Email</span>
-                      <span className="mt-1 block break-all font-medium text-[#681F2A] underline decoration-[#681F2A]/30 underline-offset-4">{BOOK_CONTACT_EMAIL}</span>
-                    </span>
-                    <ArrowUpRight aria-hidden="true" className="size-4 shrink-0 text-[#6B675F] transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-                  </a>
+                      {PUBLISHER_EMAILS.map((email) => (
+                        <a key={email} href={`mailto:${email}`} className="group mt-1 flex items-center gap-2 break-all font-medium text-[#681F2A] underline decoration-[#681F2A]/30 underline-offset-4 hover:text-[#42131A]">
+                          {email}
+                          <ArrowUpRight aria-hidden="true" className="size-4 shrink-0 text-[#6B675F] transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                        </a>
+                      ))}
+                    </div>
+                  </div>
 
                   <div className="flex items-start gap-4 py-4">
                     <span className="mt-1 grid size-11 shrink-0 place-items-center rounded-full bg-[#681F2A]/10 text-[#681F2A]">
