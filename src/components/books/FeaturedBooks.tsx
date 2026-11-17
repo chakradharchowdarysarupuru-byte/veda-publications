@@ -157,7 +157,7 @@ export default function FeaturedBooks() {
   };
   const selectedBookWhatsAppHref = selectedBook
     ? getWhatsAppContactHref(
-        `Hello, I would like to ask about "${selectedBook.title}"${selectedBook.author ? ` by ${selectedBook.author}` : ""}.`
+        `Hello, I would like to ask about "${selectedBook.title}"${selectedBook.author ? ` by ${selectedBook.author}` : ""}${selectedBook.isbn ? ` (ISBN ${selectedBook.isbn})` : ""}.`
       )
     : "";
 
@@ -176,7 +176,7 @@ export default function FeaturedBooks() {
           </div>
           <Link
             href="/books"
-            className="inline-flex min-h-11 items-center rounded-full border border-[#6B675F] px-5 py-3 text-xs font-semibold uppercase tracking-[0.1em] hover:border-[#681F2A] hover:text-[#681F2A]"
+            className="inline-flex min-h-11 items-center rounded-full border border-action/50 px-5 py-3 text-xs font-semibold uppercase tracking-[0.1em] text-action hover:bg-action hover:text-white"
           >
             Browse all books
           </Link>
@@ -199,7 +199,7 @@ export default function FeaturedBooks() {
                   aria-label={`Browse ${name}, ${categoryBooks.length} ${categoryBooks.length === 1 ? "book" : "books"}`}
                   aria-haspopup="dialog"
                   onClick={(event) => openCategory(name, event.currentTarget)}
-                  className="group relative flex min-h-72 cursor-pointer flex-col overflow-hidden rounded-sm p-5 text-left text-[#211E1A] transition-transform duration-200 hover:-translate-y-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#681F2A] motion-reduce:transform-none motion-reduce:transition-none sm:min-h-80 sm:p-6"
+                  className="group relative flex min-h-72 cursor-pointer flex-col overflow-hidden rounded-sm p-5 text-left text-[#211E1A] transition-transform duration-200 hover:-translate-y-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-action motion-reduce:transform-none motion-reduce:transition-none sm:min-h-80 sm:p-6"
                   style={{ backgroundColor: categoryBackgrounds[categoryIndex % categoryBackgrounds.length] }}
                 >
                   <span className="flex items-center justify-between gap-3">
@@ -280,7 +280,7 @@ export default function FeaturedBooks() {
                 type="button"
                 onClick={() => setSelectedCategory(null)}
                 aria-label="Close category books"
-                className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[#6B675F] text-xl hover:bg-black/[0.05]"
+                className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-action/50 text-xl text-action hover:bg-action hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-action"
               >
                 ×
               </button>
@@ -308,6 +308,7 @@ export default function FeaturedBooks() {
                     <div className="flex min-w-0 flex-1 flex-col items-start py-1">
                       <h3 className="font-serif text-2xl leading-tight sm:text-3xl">{book.title}</h3>
                       {book.author && <p className="mt-3 text-base leading-7 text-[#5F5A52]">{book.author}</p>}
+                      {book.isbn && <p className="mt-1 text-sm text-[#5F5A52]">ISBN: {book.isbn}</p>}
                       <button
                         type="button"
                         aria-haspopup="dialog"
@@ -315,7 +316,7 @@ export default function FeaturedBooks() {
                           lastBookTriggerRef.current = event.currentTarget;
                           setSelectedBook(book);
                         }}
-                        className="mt-5 inline-flex min-h-11 items-center text-base font-semibold text-[#681F2A] underline underline-offset-4 hover:text-[#42131A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#681F2A] sm:mt-auto"
+                        className="mt-5 inline-flex min-h-11 items-center text-base font-semibold text-action underline underline-offset-4 hover:text-action-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-action sm:mt-auto"
                       >
                         View abstract
                       </button>
@@ -362,13 +363,14 @@ export default function FeaturedBooks() {
                 )}
                 <h2 id="featured-abstract-title" className="mt-3 font-serif text-3xl sm:text-4xl">{selectedBook.title}</h2>
                 {selectedBook.author && <p className="mt-2 text-sm text-[#5F5A52]">{selectedBook.author}</p>}
+                {selectedBook.isbn && <p className="mt-1 text-xs text-[#5F5A52]">ISBN: {selectedBook.isbn}</p>}
               </div>
               <button
                 ref={abstractCloseButtonRef}
                 type="button"
                 onClick={() => setSelectedBook(null)}
                 aria-label="Close book abstract"
-                className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[#6B675F] text-xl hover:bg-[#111111]/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#681F2A]"
+                className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-action/50 text-xl text-action hover:bg-action hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-action"
               >
                 ×
               </button>
@@ -392,7 +394,7 @@ export default function FeaturedBooks() {
                   author: selectedBook.author ?? "",
                   isbn: selectedBook.isbn,
                 })}
-                className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-[#681F2A] px-5 py-3 text-xs font-semibold uppercase tracking-[0.1em] text-white hover:bg-[#521821] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#681F2A]"
+                className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-action px-5 py-3 text-xs font-semibold uppercase tracking-[0.1em] text-white hover:bg-action-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-action"
               >
                 <Mail aria-hidden="true" className="size-4" />
                 Contact about this book
@@ -403,7 +405,7 @@ export default function FeaturedBooks() {
                   href={selectedBookWhatsAppHref}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-[#6B675F] px-5 py-3 text-xs font-semibold uppercase tracking-[0.1em] text-[#681F2A] hover:border-[#681F2A] hover:bg-[#681F2A]/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#681F2A]"
+                  className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-action/50 px-5 py-3 text-xs font-semibold uppercase tracking-[0.1em] text-action hover:bg-action hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-action"
                 >
                   <MessageCircle aria-hidden="true" className="size-4" />
                   WhatsApp

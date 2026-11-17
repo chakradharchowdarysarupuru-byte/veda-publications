@@ -31,7 +31,7 @@ Existing sign-ins last up to 8 hours. To sign everyone out at once, change the b
 
 ## Books
 
-Add, edit, publish or remove books at `/admin/books`. Covers can be an HTTPS image URL or a file in `public/books/` (a new file there needs a commit and redeploy). Sign-in is limited to 8 attempts per 15 minutes per IP.
+Add, edit, publish or remove books at `/admin/books`. Covers can be uploaded (JPG, PNG or WebP, up to 4 MB), pasted as an HTTPS image URL, or set to a file in `public/books/`. Uploads go to Supabase Storage when `DATABASE_PROVIDER=supabase`, otherwise to `backend/uploads/` (a Docker volume). Sign-in is limited to 8 attempts per 15 minutes per IP.
 
 ## Local development
 

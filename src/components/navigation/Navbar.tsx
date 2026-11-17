@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from "react";
 const navigationItems = [
   { label: "Home", href: "/" },
   { label: "Books", href: "/books" },
+  { label: "Journals", href: "/books?tab=journals" },
   { label: "About", href: "/#about" },
   { label: "Submissions", href: "/#submissions" },
   { label: "Contact", href: "/#contact" },
@@ -57,7 +58,7 @@ export default function Navbar() {
               <span className="block font-serif text-[1.05rem] font-semibold leading-none tracking-[0.12em] text-[#111111]">
                 VEDA
               </span>
-              <span className="mt-1 block text-[0.55rem] font-medium uppercase tracking-[0.28em] text-[#5F5A52]">
+              <span className="mt-1 block text-[0.6rem] font-bold uppercase tracking-[0.26em] text-[#3D3D3D]">
                 Publications
               </span>
             </span>
@@ -78,13 +79,13 @@ export default function Navbar() {
           <div className="hidden items-center gap-3 md:flex">
             <Link
               href="/admin/login"
-              className="rounded-full px-3 py-2 text-[0.78rem] font-medium text-[#3D3D3D] hover:text-[#681F2A]"
+              className="rounded-full px-3 py-2 text-[0.78rem] font-medium text-[#3D3D3D] hover:text-action"
             >
               Chief Editor
             </Link>
             <Link
               href="/books"
-              className="inline-flex items-center gap-2 rounded-full bg-[#111111] px-5 py-3 text-[0.72rem] font-semibold uppercase tracking-[0.14em] text-white hover:bg-[#681F2A]"
+              className="inline-flex items-center gap-2 rounded-full bg-action px-5 py-3 text-[0.72rem] font-semibold uppercase tracking-[0.14em] text-white hover:bg-action-hover"
             >
               Browse books <span aria-hidden="true">→</span>
             </Link>
@@ -94,7 +95,7 @@ export default function Navbar() {
             ref={menuButtonRef}
             type="button"
             onClick={() => setMenuOpen((open) => !open)}
-            className="flex h-11 w-11 items-center justify-center rounded-full border border-[#6B675F] text-[#111111] hover:bg-black/[0.05] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#681F2A] md:hidden"
+            className="flex h-11 w-11 items-center justify-center rounded-full border border-action/50 text-action hover:bg-action hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-action md:hidden"
             aria-label={menuOpen ? "Close menu" : "Open menu"}
             aria-expanded={menuOpen}
             aria-controls="mobile-navigation"
@@ -113,7 +114,7 @@ export default function Navbar() {
                 key={item.label}
                 href={item.href}
                 onClick={() => setMenuOpen(false)}
-                className="block min-h-11 rounded-2xl px-4 py-3 text-sm font-medium text-[#3D3D3D] hover:bg-black/[0.05] hover:text-[#681F2A]"
+                className="block min-h-11 rounded-2xl px-4 py-3 text-sm font-medium text-[#3D3D3D] hover:bg-black/[0.05] hover:text-action"
               >
                 {item.label}
               </Link>

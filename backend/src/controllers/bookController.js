@@ -1,4 +1,5 @@
 const { dataStore } = require("../config/dataStore");
+const { storeCover } = require("../config/coverStorage");
 
 const BOOK_FIELDS = [
   "title",
@@ -176,10 +177,42 @@ const deleteBook = async (req, res) => {
   }
 };
 
+const hasSignature = (buffer, bytes, offset = 0) =>
+  buffer.length >= offset + bytes.length && bytes.every((byte, index) => buffer[offset + index] === byte);
+
+// Magic bytes per accepted content type.
+const COVER_SIGNATURES = {
+  "image/jpeg": (buffer) => hasSignature(buffer, [0xff, 0xd8, 0xff]),
+  "image/png": (buffer) => hasSignature(buffer, [0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]),
+  "image/webp": (buffer) =>
+    hasSignature(buffer, [0x52, 0x49, 0x46, 0x46]) && hasSignature(buffer, [0x57, 0x45, 0x42, 0x50], 8),
+};
+
+const uploadCover = async (req, res) => {
+  const contentType = (req.get("content-type") || "").split(";")[0].trim().toLowerCase();
+  if (!Object.hasOwn(COVER_SIGNATURES, contentType)) {
+    return res.status(400).json({ success: false, message: "Upload a JPG, PNG or WebP image." });
+  }
+  if (!Buffer.isBuffer(req.body) || req.body.length === 0) {
+    return res.status(400).json({ success: false, message: "The image file is empty." });
+  }
+  if (!COVER_SIGNATURES[contentType](req.body)) {
+    return res.status(400).json({ success: false, message: "The file contents do not match its image type." });
+  }
+  try {
+    const url = await storeCover(req.body, contentType);
+    return res.status(201).json({ success: true, url });
+  } catch (error) {
+    console.error("Cover upload failed:", error.message);
+    return res.status(500).json({ success: false, message: "Unable to store the cover image." });
+  }
+};
+
 module.exports = {
   getBooks,
   getAllBooks,
   createBook,
   updateBook,
   deleteBook,
+  uploadCover,
 };

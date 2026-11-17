@@ -1,12 +1,16 @@
 const configuredEmail = process.env.NEXT_PUBLIC_PUBLISHER_EMAIL?.trim();
 
-export const BOOK_CONTACT_EMAIL = configuredEmail || "jwsasikanth@gmail.com";
+export const BOOK_CONTACT_EMAIL = configuredEmail || "info@vedapublications.com";
+
+export const PUBLISHER_EMAILS = [
+  BOOK_CONTACT_EMAIL,
+  "editorvedapublications@gmail.com",
+];
 
 export const PUBLISHER_WHATSAPP =
-  process.env.NEXT_PUBLIC_PUBLISHER_WHATSAPP || "+91 9985200048";
+  process.env.NEXT_PUBLIC_PUBLISHER_WHATSAPP || "+91 9948850996";
 
 export const PUBLISHER_PHONE_NUMBERS = [
-  { label: "+91 99852 00048", href: "tel:+919985200048" },
   { label: "99488 50996", href: "tel:+919948850996" },
 ];
 

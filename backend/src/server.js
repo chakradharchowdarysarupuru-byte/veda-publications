@@ -6,6 +6,8 @@ const connectDB = require("./config/db");
 const bookRoutes = require("./routes/bookRoutes");
 const authRoutes = require("./routes/authRoutes");
 
+const path = require("node:path");
+
 const app = express();
 
 const PORT = process.env.PORT || 5000;
@@ -65,6 +67,15 @@ app.get("/", (req, res) => {
   });
 });
 
+// Locally stored cover images (Supabase mode serves them from Storage instead).
+app.use(
+  "/api/uploads/covers",
+  express.static(path.join(__dirname, "..", "uploads", "covers"), {
+    fallthrough: false,
+    index: false,
+  })
+);
+
 app.use("/api", async (_req, _res, next) => {
   try {
     await ensureConnected();
@@ -89,10 +100,10 @@ app.use((error, _req, res, _next) => {
   console.error("Request failed:", error.message);
   const requestedStatus = Number(error.statusCode || error.status);
   const statusCode = requestedStatus >= 400 && requestedStatus < 600 ? requestedStatus : 500;
-  res.status(statusCode).json({
-    success: false,
-    message: statusCode < 500 ? "Invalid request." : "The request could not be completed.",
-  });
+  let message = statusCode < 500 ? "Invalid request." : "The request could not be completed.";
+  if (statusCode === 413) message = "The file is too large. Cover images can be up to 4 MB.";
+  if (statusCode === 404) message = "Endpoint not found.";
+  res.status(statusCode).json({ success: false, message });
 });
 
 const startServer = async () => {
@@ -112,4 +123,4 @@ if (require.main === module) {
   startServer();
 }
 
-module.exports = app;
+module.exports = app;

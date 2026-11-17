@@ -2,7 +2,10 @@
 
 import Image from "next/image";
 import { ArrowRight, ArrowUpRight, BookOpen, Mail, MessageCircle, Search, X } from "lucide-react";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { Suspense, useEffect, useMemo, useRef, useState, type KeyboardEvent as ReactKeyboardEvent } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import JournalCard from "@/components/journals/JournalCard";
+import { JOURNALS } from "@/lib/journals";
 import API_BASE_PATH from "@/lib/api";
 import { hasDistinctSynopsis } from "@/lib/bookText";
 import {
@@ -21,7 +24,49 @@ type Book = {
   coverImageUrl: string;
 };
 
+type CatalogueTab = "books" | "journals";
+const TABS: { id: CatalogueTab; label: string }[] = [
+  { id: "books", label: "Books" },
+  { id: "journals", label: "Journals" },
+];
+
 export default function BooksPage() {
+  return (
+    <Suspense fallback={null}>
+      <BooksPageContent />
+    </Suspense>
+  );
+}
+
+function BooksPageContent() {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const activeTab: CatalogueTab = searchParams.get("tab") === "journals" ? "journals" : "books";
+  const tabRefs = useRef<Record<CatalogueTab, HTMLButtonElement | null>>({ books: null, journals: null });
+
+  const selectTab = (tab: CatalogueTab) => {
+    const params = new URLSearchParams(searchParams.toString());
+    if (tab === "journals") params.set("tab", "journals");
+    else params.delete("tab");
+    const query = params.toString();
+    router.replace(query ? `${pathname}?${query}` : pathname, { scroll: false });
+  };
+
+  const handleTabKeyDown = (event: ReactKeyboardEvent<HTMLButtonElement>) => {
+    const index = TABS.findIndex((tab) => tab.id === activeTab);
+    let next = -1;
+    if (event.key === "ArrowRight") next = (index + 1) % TABS.length;
+    else if (event.key === "ArrowLeft") next = (index - 1 + TABS.length) % TABS.length;
+    else if (event.key === "Home") next = 0;
+    else if (event.key === "End") next = TABS.length - 1;
+    if (next < 0) return;
+    event.preventDefault();
+    const target = TABS[next].id;
+    selectTab(target);
+    tabRefs.current[target]?.focus();
+  };
+
   const [books, setBooks] = useState<Book[]>([]);
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("All");
@@ -136,15 +181,44 @@ export default function BooksPage() {
           <div className="flex items-center gap-3 border-l-2 border-[#B9975B] pl-4 md:mb-2">
             <BookOpen aria-hidden="true" className="size-6 shrink-0 text-[#681F2A]" />
             <div>
-              <p className="font-serif text-2xl">{books.length}</p>
+              <p className="font-serif text-2xl">700+</p>
               <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#6B675F]">
-                {books.length === 1 ? "Published title" : "Published titles"}
+                Published titles
               </p>
             </div>
           </div>
         </div>
       </section>
 
+      <div className="border-t border-[#111111]/10 px-4 sm:px-6 lg:px-10">
+        <div className="mx-auto max-w-[1440px]">
+          <div role="tablist" aria-label="Catalogue sections" className="flex gap-2 py-4">
+            {TABS.map((tab) => (
+              <button
+                key={tab.id}
+                ref={(node) => { tabRefs.current[tab.id] = node; }}
+                id={`tab-${tab.id}`}
+                type="button"
+                role="tab"
+                aria-selected={activeTab === tab.id}
+                aria-controls={`panel-${tab.id}`}
+                tabIndex={activeTab === tab.id ? 0 : -1}
+                onClick={() => selectTab(tab.id)}
+                onKeyDown={handleTabKeyDown}
+                className={`min-h-11 rounded-full px-6 py-2 text-xs font-semibold uppercase tracking-[0.12em] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-action ${
+                  activeTab === tab.id
+                    ? "bg-action text-white hover:bg-action-hover"
+                    : "border border-action/50 text-action hover:bg-action hover:text-white"
+                }`}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div role="tabpanel" id="panel-books" aria-labelledby="tab-books" hidden={activeTab !== "books"}>
       <section aria-label="Filter catalogue" className="sticky top-28 z-30 border-y border-[#111111]/10 bg-[#F7F4ED]/95 px-4 py-4 backdrop-blur-md sm:px-6 lg:px-10">
         <div className="mx-auto flex max-w-[1440px] items-center gap-3 sm:gap-5">
           <div className="relative w-[48%] min-w-32 max-w-[24rem] shrink-0">
@@ -174,8 +248,8 @@ export default function BooksPage() {
                   onClick={() => setCategory(item)}
                   className={`min-h-11 shrink-0 whitespace-nowrap rounded-full px-4 py-2 text-xs font-semibold uppercase tracking-[0.12em] ${
                     category === item
-                      ? "bg-[#681F2A] text-white"
-                      : "border border-[#6B675F] text-[#5F5A52] hover:border-[#681F2A] hover:text-[#681F2A]"
+                      ? "bg-action text-white hover:bg-action-hover"
+                      : "border border-action/50 text-action hover:bg-action hover:text-white"
                   }`}
                 >
                   {item}
@@ -208,7 +282,7 @@ export default function BooksPage() {
                 <button
                   type="button"
                   onClick={() => { setSearch(""); setCategory("All"); }}
-                  className="mt-6 inline-flex min-h-11 items-center gap-2 rounded-full bg-[#681F2A] px-5 py-3 text-xs font-semibold uppercase tracking-[0.1em] text-white hover:bg-[#521821]"
+                  className="mt-6 inline-flex min-h-11 items-center gap-2 rounded-full bg-action px-5 py-3 text-xs font-semibold uppercase tracking-[0.1em] text-white hover:bg-action-hover"
                 >
                   <X aria-hidden="true" className="size-4" />
                   Clear filters
@@ -227,7 +301,7 @@ export default function BooksPage() {
                   <button
                     type="button"
                     onClick={() => { setSearch(""); setCategory("All"); }}
-                    className="inline-flex min-h-9 items-center gap-1.5 text-xs font-semibold uppercase tracking-[0.1em] text-[#681F2A] underline underline-offset-4 hover:text-[#42131A]"
+                    className="inline-flex min-h-9 items-center gap-1.5 text-xs font-semibold uppercase tracking-[0.1em] text-action underline underline-offset-4 hover:text-action-hover"
                   >
                     Clear filters <X aria-hidden="true" className="size-4" />
                   </button>
@@ -250,6 +324,7 @@ export default function BooksPage() {
                         <div className="flex h-[82%] w-[62%] flex-col justify-end bg-[#111111] p-6 text-[#F7F4ED]">
                           <h2 className="font-serif text-2xl">{book.title}</h2>
                           <p className="mt-3 text-xs text-white/70">{book.author}</p>
+                          {book.isbn && <p className="mt-1 text-xs text-white/70">ISBN: {book.isbn}</p>}
                         </div>
                       )}
                       {book.category && (
@@ -261,11 +336,12 @@ export default function BooksPage() {
                     <div className="flex flex-1 flex-col p-5 sm:p-6">
                       <h2 className="font-serif text-2xl leading-tight">{book.title}</h2>
                       {book.author && <p className="mt-2 text-sm leading-6 text-[#5F5A52]">{book.author}</p>}
+                      {book.isbn && <p className="mt-1 text-xs text-[#5F5A52]">ISBN: {book.isbn}</p>}
                       {book.synopsis && <p className="mt-4 line-clamp-3 text-sm leading-6 text-[#5F5A52]">{book.synopsis}</p>}
                       <button
                         type="button"
                         onClick={(event) => openAbstract(book, event.currentTarget)}
-                        className="mt-6 inline-flex min-h-11 w-fit items-center gap-2 rounded-full border border-[#681F2A]/50 px-5 py-2 text-xs font-semibold uppercase tracking-[0.1em] text-[#681F2A] hover:bg-[#681F2A] hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#681F2A]"
+                        className="mt-6 inline-flex min-h-11 w-fit items-center gap-2 rounded-full border border-action/50 px-5 py-2 text-xs font-semibold uppercase tracking-[0.1em] text-action hover:bg-action hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-action"
                       >
                         Read abstract <ArrowRight aria-hidden="true" className="size-4" />
                       </button>
@@ -277,6 +353,19 @@ export default function BooksPage() {
           )}
         </div>
       </section>
+      </div>
+
+      <div role="tabpanel" id="panel-journals" aria-labelledby="tab-journals" hidden={activeTab !== "journals"}>
+        <section aria-label="Journals" className="px-6 py-16 lg:px-10 lg:py-20">
+          <div className="mx-auto max-w-[1440px]">
+            <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">
+              {JOURNALS.map((journal) => (
+                <JournalCard key={journal.id} journal={journal} />
+              ))}
+            </div>
+          </div>
+        </section>
+      </div>
 
       {selectedBook && (
         <div
@@ -317,7 +406,7 @@ export default function BooksPage() {
                 type="button"
                 onClick={() => setSelectedBook(null)}
                 aria-label="Close abstract"
-                className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[#6B675F] text-xl hover:bg-[#111111]/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#681F2A]"
+                className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-action/50 text-xl text-action hover:bg-action hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-action"
               >
                 ×
               </button>
@@ -337,7 +426,7 @@ export default function BooksPage() {
             <div className="mt-8 flex flex-wrap gap-3">
               <a
                 href={getBookContactHref(selectedBook)}
-                className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-[#681F2A] px-6 py-3 text-xs font-semibold uppercase tracking-[0.12em] text-white hover:bg-[#521821] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#681F2A]"
+                className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-action px-6 py-3 text-xs font-semibold uppercase tracking-[0.12em] text-white hover:bg-action-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-action"
               >
                 <Mail aria-hidden="true" className="size-4" />
                 Email to enquire about ordering
@@ -348,7 +437,7 @@ export default function BooksPage() {
                   href={selectedBookWhatsAppHref}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-[#6B675F] px-6 py-3 text-xs font-semibold uppercase tracking-[0.12em] hover:border-[#681F2A] hover:text-[#681F2A]"
+                  className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-action/50 px-6 py-3 text-xs font-semibold uppercase tracking-[0.12em] text-action hover:bg-action hover:text-white"
                 >
                   <MessageCircle aria-hidden="true" className="size-4" />
                   WhatsApp
