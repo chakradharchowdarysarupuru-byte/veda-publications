@@ -4,6 +4,7 @@
 - / — homepage, catalogue categories, About, submission guidance, and contact.
 - /books — searchable/filterable published catalogue with abstract dialogs.
 - /books/[id] — legacy segment redirects to /books.
+- /calls — current call for chapters and edited volumes (all themes plus an email enquiry). Content is fixed in `src/lib/calls.ts`; Chief Editor editing is planned for a later phase.
 - /admin/login — Chief Editor sign-in.
 - /admin/books — Chief Editor catalogue management.
 - /login — redirects to /admin/login.

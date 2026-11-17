@@ -1,17 +1,19 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowUpRight, Award, BookOpen, Check, ChevronRight, Globe, Lightbulb, Mail, MapPin, MessageCircle, Microscope, Phone, Quote, Sparkles, Telescope, Users } from "lucide-react";
+import { ArrowUpRight, Award, LibraryBig, Megaphone, Check, ChevronRight, Globe, Lightbulb, Mail, MapPin, MessageCircle, Microscope, Phone, Quote, Sparkles, Telescope, Users } from "lucide-react";
 import FeaturedBooks from "@/components/books/FeaturedBooks";
 import JournalCard from "@/components/journals/JournalCard";
 import { JOURNALS } from "@/lib/journals";
 import Footer from "@/components/footer/Footer";
 import HeroBookSplash from "@/components/home/HeroBookSplash";
+import TestimonialsCarousel from "@/components/testimonials/TestimonialsCarousel";
 import {
   BOOK_CONTACT_EMAIL,
   PUBLISHER_EMAILS,
   PUBLISHER_PHONE_NUMBERS,
   getWhatsAppContactHref,
 } from "@/lib/bookContact";
+import { CALL_FOR_CHAPTERS } from "@/lib/calls";
 
 const VISION_PILLARS = [
   { icon: Lightbulb, title: "Advancing Knowledge", text: "Publishing work that moves scholarship forward." },
@@ -19,6 +21,8 @@ const VISION_PILLARS = [
   { icon: Microscope, title: "Research Excellence", text: "Upholding rigour and responsibility in every title." },
   { icon: Globe, title: "Diverse Voices", text: "A meaningful platform for scholars across the world." },
 ];
+
+const HOMEPAGE_THEME_COUNT = 4;
 
 const NETWORK_ROLES = [
   "Editorial Board Members",
@@ -82,13 +86,13 @@ export default function Home() {
           </p>
           <Link
             href="/books"
-            className="mt-9 inline-flex min-h-12 items-center justify-center rounded-full bg-[#111111] px-7 py-4 text-xs font-semibold uppercase tracking-[0.15em] text-white hover:bg-[#681F2A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#681F2A]"
+            className="mt-9 inline-flex min-h-12 items-center justify-center rounded-full bg-action px-7 py-4 text-xs font-semibold uppercase tracking-[0.15em] text-white hover:bg-action-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-action"
           >
             Explore the catalogue <span aria-hidden="true" className="ml-3">→</span>
           </Link>
           <Link
             href="/#about"
-            className="mt-4 inline-flex min-h-12 sm:ml-4 sm:mt-9 items-center justify-center rounded-full border border-[#6B675F] px-7 py-4 text-xs font-semibold uppercase tracking-[0.15em] text-[#111111] hover:border-[#681F2A] hover:text-[#681F2A]"
+            className="mt-4 inline-flex min-h-12 sm:ml-4 sm:mt-9 items-center justify-center rounded-full border border-action/50 px-7 py-4 text-xs font-semibold uppercase tracking-[0.15em] text-action hover:bg-action hover:text-white"
           >
             About Veda
           </Link>
@@ -108,7 +112,7 @@ export default function Home() {
             </div>
             <Link
               href="/books?tab=journals"
-              className="inline-flex min-h-11 items-center gap-2 rounded-full border border-[#681F2A] px-6 py-2 text-xs font-semibold uppercase tracking-[0.1em] text-[#681F2A] hover:bg-[#681F2A] hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#681F2A]"
+              className="inline-flex min-h-11 items-center gap-2 rounded-full border border-action/50 px-6 py-2 text-xs font-semibold uppercase tracking-[0.1em] text-action hover:bg-action hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-action"
             >
               Explore All Journals
               <ChevronRight aria-hidden="true" className="size-4" />
@@ -170,48 +174,40 @@ export default function Home() {
               </p>
 
               <div className="mt-10 border-t border-[#6B675F]/40 pt-8">
-                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#681F2A]">The publisher</p>
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#681F2A]">The CEO &amp; Publisher</p>
                 <h3 className="mt-3 font-serif text-3xl leading-tight sm:text-4xl">
                   Dr Kambham John Wesley Sasikanth
                 </h3>
                 <p className="mt-4 max-w-3xl text-base leading-7 text-[#3D3D3D]">
                   Dr. John Wesley Sasikanth is an accomplished academic, researcher, author, editor, and orator with extensive experience in higher education, literary scholarship, publishing, and public engagement. His academic and intellectual pursuits span English Language Teaching, literature, interdisciplinary research, theology, and social thought. Through his contributions to education, research, publishing, and public speaking, he is committed to advancing knowledge, nurturing intellectual growth, and inspiring society.
                 </p>
-                <ul className="mt-5 space-y-2 text-sm leading-6 text-[#3D3D3D]">
-                  <li><span className="font-semibold text-[#111111]">Editor-in-Chief:</span> Biblical Studies Journal (BSJ)</li>
-                  <li><span className="font-semibold text-[#111111]">Editor:</span> Calvary Sakthi Magazine</li>
-                </ul>
               </div>
 
-              <blockquote className="mt-8 border-l-2 border-[#681F2A] pl-5 font-serif text-xl italic leading-8 text-[#4B612E]">
-                “Trust in the LORD with all your heart” <span className="not-italic">— Proverbs 3:5</span>
-              </blockquote>
-
               <div className="mt-9 rounded-xl border border-[#6B675F]/40 bg-[#F7F4ED]/70 p-5 sm:p-6">
-                <h3 className="font-serif text-2xl">Contact the publisher</h3>
+                <h3 className="font-serif text-2xl">Contact us</h3>
                 <div className="mt-5 space-y-4">
                   <div className="flex min-h-12 items-center gap-3">
-                    <span className="grid size-10 shrink-0 place-items-center rounded-full bg-[#681F2A]/10 text-[#681F2A]">
+                    <span className="grid size-10 shrink-0 place-items-center rounded-full bg-action/10 text-action">
                       <Mail aria-hidden="true" className="size-5" />
                     </span>
                     <span className="min-w-0">
                       <span className="block text-xs font-semibold uppercase tracking-[0.12em] text-[#5F5A52]">Email</span>
                       {PUBLISHER_EMAILS.map((email) => (
-                        <a key={email} href={`mailto:${email}`} className="block break-all font-medium text-[#681F2A] underline decoration-[#681F2A]/40 underline-offset-4 hover:text-[#42131A]">
+                        <a key={email} href={`mailto:${email}`} className="block break-all font-medium text-action underline decoration-action/40 underline-offset-4 hover:text-action-hover">
                           {email}
                         </a>
                       ))}
                     </span>
                   </div>
                   <div className="flex min-h-12 items-center gap-3">
-                    <span className="grid size-10 shrink-0 place-items-center rounded-full bg-[#681F2A]/10 text-[#681F2A]">
+                    <span className="grid size-10 shrink-0 place-items-center rounded-full bg-action/10 text-action">
                       <Phone aria-hidden="true" className="size-5" />
                     </span>
                     <span className="min-w-0">
                       <span className="block text-xs font-semibold uppercase tracking-[0.12em] text-[#5F5A52]">Phone / WhatsApp</span>
                       <span className="flex flex-wrap gap-x-3 gap-y-1 text-sm font-medium">
                         {PUBLISHER_PHONE_NUMBERS.map((phone) => (
-                          <a key={phone.href} href={phone.href} className="whitespace-nowrap text-[#681F2A] underline decoration-[#681F2A]/40 underline-offset-4 hover:text-[#42131A]">
+                          <a key={phone.href} href={phone.href} className="whitespace-nowrap text-action underline decoration-action/40 underline-offset-4 hover:text-action-hover">
                             {phone.label}
                           </a>
                         ))}
@@ -226,7 +222,7 @@ export default function Home() {
               </div>
             </div>
 
-            <figure className="relative mx-auto w-full max-w-md md:max-w-none">
+            <figure className="relative mx-auto w-full max-w-[19rem] sm:max-w-sm md:max-w-[14rem] lg:max-w-sm xl:max-w-md">
               <div className="absolute -inset-3 -rotate-2 rounded-2xl bg-[#681F2A]/10" aria-hidden="true" />
               <div className="relative aspect-[4/5] overflow-hidden rounded-xl bg-white shadow-[0_24px_60px_rgba(17,17,17,0.18)]">
                 <Image
@@ -259,7 +255,7 @@ export default function Home() {
             <div className="mt-8 flex flex-wrap gap-3">
               <a
                 href={`mailto:${BOOK_CONTACT_EMAIL}?subject=${encodeURIComponent("Book proposal enquiry")}`}
-                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[#F7F4ED] px-6 py-3 text-xs font-semibold uppercase tracking-[0.1em] text-[#681F2A] hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#E8C98D]"
+                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[#F7F4ED] px-6 py-3 text-xs font-semibold uppercase tracking-[0.1em] text-action hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#E8C98D]"
               >
                 <Mail aria-hidden="true" className="size-4" />
                 Email a proposal
@@ -280,24 +276,50 @@ export default function Home() {
             </div>
           </div>
 
-          <aside className="rounded-2xl bg-[#F7F4ED] p-6 text-[#111111] shadow-[0_24px_60px_rgba(17,17,17,0.18)] sm:p-8">
-            <div className="flex items-center gap-3">
-              <span className="grid size-11 place-items-center rounded-full bg-[#681F2A]/10 text-[#681F2A]">
-                <BookOpen aria-hidden="true" className="size-5" />
-              </span>
-              <h3 className="font-serif text-2xl sm:text-3xl">A useful first message</h3>
+          <aside aria-labelledby="chapters-heading" className="relative overflow-hidden rounded-2xl bg-[#F7F4ED] p-6 text-[#111111] shadow-[0_24px_60px_rgba(17,17,17,0.18)] sm:p-8">
+            <div className="flex items-start gap-4">
+              <Megaphone aria-hidden="true" className="mt-1 size-9 shrink-0 text-[#681F2A] sm:size-10" strokeWidth={1.5} />
+              <div>
+                <h3 id="chapters-heading" className="font-serif text-2xl leading-tight text-[#681F2A] sm:text-3xl">
+                  {CALL_FOR_CHAPTERS.title}
+                </h3>
+                <p className="mt-2 text-sm leading-6 text-[#3D3D3D] sm:text-base">
+                  {CALL_FOR_CHAPTERS.summary}
+                </p>
+              </div>
             </div>
-            <p className="mt-5 text-sm leading-7 text-[#5F5A52]">
-              A brief introduction helps the publisher understand your project. You might include:
-            </p>
-            <ul className="mt-4 space-y-3 text-sm leading-6 text-[#3D3D3D]">
-              <li className="flex gap-3"><span className="mt-2 size-1.5 shrink-0 rounded-full bg-[#681F2A]" />Your book’s subject and a short outline</li>
-              <li className="flex gap-3"><span className="mt-2 size-1.5 shrink-0 rounded-full bg-[#681F2A]" />Who you expect will read it</li>
-              <li className="flex gap-3"><span className="mt-2 size-1.5 shrink-0 rounded-full bg-[#681F2A]" />A few words about you and the project’s stage</li>
-            </ul>
-            <p className="mt-6 border-t border-[#6B675F]/25 pt-5 text-sm leading-6 text-[#5F5A52]">
-              This website does not accept manuscript uploads. Please send a brief enquiry first and share a complete manuscript only if requested.
-            </p>
+
+            <div className="relative mt-6 rounded-xl bg-white/60 p-5 sm:p-6">
+              <LibraryBig aria-hidden="true" className="pointer-events-none absolute -bottom-3 -right-3 hidden size-32 text-[#B9975B]/25 sm:block" strokeWidth={1} />
+              <h4 className="inline-block border-b-2 border-[#B9975B]/50 pb-1 font-serif text-lg text-[#681F2A]">Indicative Themes</h4>
+              <ul className="relative mt-4 space-y-2 text-sm leading-6 text-[#111111]">
+                {CALL_FOR_CHAPTERS.themes.slice(0, HOMEPAGE_THEME_COUNT).map((theme) => (
+                  <li key={theme} className="flex gap-3">
+                    <span aria-hidden="true" className="mt-2.5 size-1.5 shrink-0 rounded-full bg-[#681F2A]" />
+                    {theme}
+                  </li>
+                ))}
+              </ul>
+              {CALL_FOR_CHAPTERS.themes.length > HOMEPAGE_THEME_COUNT && (
+                <Link
+                  href="/calls"
+                  className="relative mt-3 inline-flex items-center gap-1 pl-[1.125rem] text-sm font-semibold text-action underline decoration-action/40 underline-offset-4 hover:text-action-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-action"
+                >
+                  and more themes
+                  <ChevronRight aria-hidden="true" className="size-4" />
+                </Link>
+              )}
+            </div>
+
+            <div className="mt-6 flex justify-end">
+              <Link
+                href="/calls"
+                className="inline-flex min-h-12 items-center gap-2 rounded-lg bg-action px-6 py-3 font-serif text-base text-white shadow-[0_8px_20px_rgba(0,75,141,0.25)] hover:bg-action-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-action"
+              >
+                View Current Calls
+                <ChevronRight aria-hidden="true" className="size-5" />
+              </Link>
+            </div>
           </aside>
         </div>
       </section>
@@ -321,7 +343,7 @@ export default function Home() {
               </ul>
               <a
                 href={REGISTER_INTEREST_HREF}
-                className="mt-7 inline-flex min-h-12 items-center gap-3 rounded-lg bg-[#681F2A] px-7 py-3 font-serif text-lg text-white shadow-[0_8px_20px_rgba(104,31,42,0.25)] hover:bg-[#42131A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#681F2A]"
+                className="mt-7 inline-flex min-h-12 items-center gap-3 rounded-lg bg-action px-7 py-3 font-serif text-lg text-white shadow-[0_8px_20px_rgba(0,75,141,0.25)] hover:bg-action-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-action"
               >
                 Register Your Interest
                 <ChevronRight aria-hidden="true" className="size-5" />
@@ -346,6 +368,19 @@ export default function Home() {
         </div>
       </section>
 
+      <section id="testimonials" aria-labelledby="testimonials-heading" className="scroll-mt-28 bg-[#EDE8DD] px-6 py-20 lg:px-10">
+        <div className="mx-auto max-w-[1440px] text-center">
+          <h2 id="testimonials-heading" className="font-serif text-4xl text-[#9C7A3C] sm:text-5xl">What Our Authors Say</h2>
+          <p className="mt-3 font-serif text-xl text-[#111111] sm:text-2xl">Voices of Trust, Excellence and Collaboration</p>
+          <div aria-hidden="true" className="mx-auto mt-6 h-px w-40 bg-[#B9975B]/70" />
+          <p className="mx-auto mt-6 max-w-2xl text-base italic leading-7 text-[#5F5A52]">
+            Discover the experiences and reflections of authors who have published with VEDA Publications.
+          </p>
+          <p className="mt-3 text-xs font-semibold uppercase tracking-[0.25em] text-[#7A5C25]">Veda Publications</p>
+          <TestimonialsCarousel />
+        </div>
+      </section>
+
       <section id="contact" className="scroll-mt-28 bg-[#EDE8DD] px-6 py-20 lg:px-10">
         <div className="mx-auto max-w-[1440px]">
           <div className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-end lg:gap-20">
@@ -359,7 +394,7 @@ export default function Home() {
               </p>
               <Link
                 href="/books"
-                className="mt-7 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-[#681F2A] underline decoration-[#681F2A]/40 underline-offset-4 hover:text-[#42131A]"
+                className="mt-7 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-action underline decoration-action/40 underline-offset-4 hover:text-action-hover"
               >
                 Explore the catalogue <ArrowUpRight aria-hidden="true" className="size-4" />
               </Link>
@@ -373,13 +408,13 @@ export default function Home() {
 
                 <div className="mt-7 divide-y divide-[#6B675F]/20 border-y border-[#6B675F]/20">
                   <div className="flex min-h-[76px] items-start gap-4 py-4">
-                    <span className="mt-1 grid size-11 shrink-0 place-items-center rounded-full bg-[#681F2A]/10 text-[#681F2A]">
+                    <span className="mt-1 grid size-11 shrink-0 place-items-center rounded-full bg-action/10 text-action">
                       <Mail aria-hidden="true" className="size-5" />
                     </span>
                     <div className="min-w-0 flex-1">
                       <span className="block text-xs font-semibold uppercase tracking-[0.14em] text-[#6B675F]">Email</span>
                       {PUBLISHER_EMAILS.map((email) => (
-                        <a key={email} href={`mailto:${email}`} className="group mt-1 flex items-center gap-2 break-all font-medium text-[#681F2A] underline decoration-[#681F2A]/30 underline-offset-4 hover:text-[#42131A]">
+                        <a key={email} href={`mailto:${email}`} className="group mt-1 flex items-center gap-2 break-all font-medium text-action underline decoration-action/30 underline-offset-4 hover:text-action-hover">
                           {email}
                           <ArrowUpRight aria-hidden="true" className="size-4 shrink-0 text-[#6B675F] transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
                         </a>
@@ -388,14 +423,14 @@ export default function Home() {
                   </div>
 
                   <div className="flex items-start gap-4 py-4">
-                    <span className="mt-1 grid size-11 shrink-0 place-items-center rounded-full bg-[#681F2A]/10 text-[#681F2A]">
+                    <span className="mt-1 grid size-11 shrink-0 place-items-center rounded-full bg-action/10 text-action">
                       <Phone aria-hidden="true" className="size-5" />
                     </span>
                     <div className="min-w-0 flex-1">
                       <span className="block text-xs font-semibold uppercase tracking-[0.14em] text-[#6B675F]">Phone</span>
                       <div className="mt-1 flex flex-wrap gap-x-4 gap-y-1">
                         {PUBLISHER_PHONE_NUMBERS.map((phone) => (
-                          <a key={phone.href} href={phone.href} className="whitespace-nowrap font-medium text-[#681F2A] underline decoration-[#681F2A]/30 underline-offset-4 hover:text-[#42131A]">
+                          <a key={phone.href} href={phone.href} className="whitespace-nowrap font-medium text-action underline decoration-action/30 underline-offset-4 hover:text-action-hover">
                             {phone.label}
                           </a>
                         ))}
@@ -408,14 +443,14 @@ export default function Home() {
                       href={whatsappHref}
                       target="_blank"
                       rel="noreferrer"
-                      className="group flex min-h-[76px] items-center gap-4 py-4"
+                      className="group flex min-h-[76px] items-center gap-4 rounded-lg py-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-action"
                     >
-                      <span className="grid size-11 shrink-0 place-items-center rounded-full bg-[#681F2A]/10 text-[#681F2A] transition-colors group-hover:bg-[#681F2A] group-hover:text-white">
+                      <span className="grid size-11 shrink-0 place-items-center rounded-full bg-action/10 text-action transition-colors group-hover:bg-action group-hover:text-white">
                         <MessageCircle aria-hidden="true" className="size-5" />
                       </span>
                       <span className="min-w-0 flex-1">
                         <span className="block text-xs font-semibold uppercase tracking-[0.14em] text-[#6B675F]">WhatsApp</span>
-                        <span className="mt-1 block font-medium text-[#681F2A]">Send a message</span>
+                        <span className="mt-1 block font-medium text-action">Send a message</span>
                       </span>
                       <ArrowUpRight aria-hidden="true" className="size-4 shrink-0 text-[#6B675F] transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
                     </a>
