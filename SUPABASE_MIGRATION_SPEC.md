@@ -6,14 +6,14 @@
 ## Goals and constraints
 
 - Preserve published-only public reads and Chief Editor draft visibility/CRUD. Keep API paths and response shapes; map PostgreSQL `id` to API `_id`.
-- Keep Supabase secret/service-role credentials backend-only, never in `NEXT_PUBLIC_*`. Do not adopt Supabase Auth, Storage, or browser database access.
+- Keep Supabase secret/service-role credentials backend-only, never in `NEXT_PUBLIC_*`. Do not adopt Supabase Auth or browser database access. Storage is used for book covers only (approved 17 Nov 2026).
 - Retain MongoDB and backups through the rollback window.
 
 ## Target data model
 
 - `books`: text primary key preserving Mongo `_id`; existing book fields and timestamps. Enforce current required fields, limits, status values, plus status/title and ISBN indexes.
 - `editor_accounts`: preserve account ID, normalized unique email, name, bcrypt hash, role, and timestamps; enforce one `chief_editor` with a partial unique index.
-- Keep local covers in `public/books/`. Enable RLS and grant no browser-role access. Backend queries explicitly filter public reads and protects admin actions with JWT/role checks.
+- Covers: the Chief Editor uploads them through the backend to the public `book-covers` bucket (migration `20261117000100`; no browser write policies); existing `public/books/` paths stay valid. Enable RLS and grant no browser-role access. Backend queries explicitly filter public reads and protects admin actions with JWT/role checks.
 
 ## Work plan
 
