@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowUpRight, BookOpen, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
+import { ArrowUpRight, Award, BookOpen, Check, ChevronRight, Globe, Lightbulb, Mail, MapPin, MessageCircle, Microscope, Phone, Quote, Sparkles, Telescope, Users } from "lucide-react";
 import FeaturedBooks from "@/components/books/FeaturedBooks";
 import Footer from "@/components/footer/Footer";
 import HeroBookSplash from "@/components/home/HeroBookSplash";
@@ -10,6 +10,47 @@ import {
   PUBLISHER_PHONE_NUMBERS,
   getWhatsAppContactHref,
 } from "@/lib/bookContact";
+
+const VISION_PILLARS = [
+  { icon: Lightbulb, title: "Advancing Knowledge", text: "Publishing work that moves scholarship forward." },
+  { icon: Sparkles, title: "Intellectual Creativity", text: "Giving original ideas and literary voices room to grow." },
+  { icon: Microscope, title: "Research Excellence", text: "Upholding rigour and responsibility in every title." },
+  { icon: Globe, title: "Diverse Voices", text: "A meaningful platform for scholars across the world." },
+];
+
+const NETWORK_ROLES = [
+  "Editorial Board Members",
+  "Peer Reviewers",
+  "Book Contributors",
+  "Book Editors / Guest Editors",
+  "Institutional Collaborators",
+];
+
+const PUBLISH_REASONS = [
+  "A trusted platform for academic and literary works",
+  "Rigorous and responsible editorial process",
+  "Opportunities for interdisciplinary research",
+  "Dedicated support for authors and editors",
+  "Books, journals and edited volumes under one umbrella",
+  "A growing network of scholars and contributors",
+];
+
+const REGISTER_INTEREST_HREF = `mailto:${BOOK_CONTACT_EMAIL}?subject=${encodeURIComponent(
+  "Expression of interest: Veda academic network"
+)}&body=${encodeURIComponent(
+  [
+    "Hello,",
+    "",
+    "I would like to register my interest in joining the Veda Publications academic network.",
+    "",
+    "Name:",
+    "Institution / affiliation:",
+    "Area of expertise:",
+    `Role(s) of interest (${NETWORK_ROLES.join(", ")}):`,
+    "",
+    "Thank you.",
+  ].join("\n")
+)}`;
 
 export default function Home() {
   const whatsappHref = getWhatsAppContactHref(
@@ -31,8 +72,11 @@ export default function Home() {
           <h1 className="max-w-4xl font-serif text-5xl leading-[0.98] tracking-[-0.04em] text-[#111111] sm:text-6xl lg:max-w-[52%] lg:text-7xl">
             Your ideas deserve <span className="text-[#681F2A] italic">a wider audience.</span>
           </h1>
-          <p className="mt-8 max-w-2xl text-base leading-8 text-[#5F5A52] sm:text-lg lg:max-w-[48%]">
+          <p className="mt-8 max-w-2xl text-base font-semibold leading-7 text-[#681F2A] sm:text-lg lg:max-w-[48%]">
             Advancing Scholarship. Publishing Ideas. Connecting Minds.
+          </p>
+          <p className="mt-3 max-w-2xl text-base leading-8 text-[#5F5A52] sm:text-lg lg:max-w-[48%]">
+            A catalogue of published books. Browse titles from Veda Publications, read book abstracts, and contact the publisher with a question or enquiry.
           </p>
           <Link
             href="/books"
@@ -42,7 +86,7 @@ export default function Home() {
           </Link>
           <Link
             href="/#about"
-            className="ml-4 inline-flex min-h-12 items-center justify-center rounded-full border border-[#6B675F] px-7 py-4 text-xs font-semibold uppercase tracking-[0.15em] text-[#111111] hover:border-[#681F2A] hover:text-[#681F2A]"
+            className="mt-4 inline-flex min-h-12 sm:ml-4 sm:mt-9 items-center justify-center rounded-full border border-[#6B675F] px-7 py-4 text-xs font-semibold uppercase tracking-[0.15em] text-[#111111] hover:border-[#681F2A] hover:text-[#681F2A]"
           >
             About Veda
           </Link>
@@ -51,12 +95,38 @@ export default function Home() {
 
       <FeaturedBooks />
 
-      <section id="vision" className="scroll-mt-28 bg-[#F7F4ED] px-6 pb-20 pt-4 lg:px-10">
-        <div className="mx-auto max-w-[1440px] border-t border-[#6B675F]/30 pt-12">
-          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#681F2A]">Our Vision</p>
-          <p className="mt-6 max-w-4xl font-serif text-2xl leading-snug text-[#111111] sm:text-3xl lg:text-4xl">
-            To become a respected academic and literary publishing house that advances knowledge, inspires intellectual creativity, promotes research excellence, and provides a meaningful platform for diverse scholarly and literary voices across the world.
-          </p>
+      <section id="vision" className="scroll-mt-28 relative overflow-hidden bg-[#681F2A] px-6 py-20 text-[#F7F4ED] sm:py-24 lg:px-10">
+        <div aria-hidden="true" className="pointer-events-none absolute -left-24 -top-24 size-80 rounded-full bg-[#B9975B]/20 blur-3xl" />
+        <div aria-hidden="true" className="pointer-events-none absolute -bottom-32 -right-20 size-96 rounded-full bg-[#42131A]/60 blur-3xl" />
+        <div className="relative mx-auto max-w-[1440px]">
+          <div className="mx-auto max-w-5xl text-center">
+            <div className="flex items-center justify-center gap-4">
+              <span aria-hidden="true" className="h-px w-12 bg-[#E8C98D]/60 sm:w-20" />
+              <Telescope aria-hidden="true" className="size-7 text-[#E8C98D]" strokeWidth={1.5} />
+              <span aria-hidden="true" className="h-px w-12 bg-[#E8C98D]/60 sm:w-20" />
+            </div>
+            <h2 className="mt-5 text-sm font-semibold uppercase tracking-[0.35em] text-[#E8C98D]">Our Vision</h2>
+            <blockquote className="relative mt-8">
+              <Quote aria-hidden="true" className="absolute -left-2 -top-6 size-12 -scale-x-100 text-[#E8C98D]/25 sm:-left-10 sm:size-16" />
+              <p className="font-serif text-2xl leading-snug sm:text-3xl lg:text-[2.6rem] lg:leading-[1.25]">
+                To become a respected academic and literary publishing house that{" "}
+                <span className="italic text-[#E8C98D]">advances knowledge</span>, inspires intellectual creativity, promotes research excellence, and provides a meaningful platform for{" "}
+                <span className="italic text-[#E8C98D]">diverse scholarly and literary voices</span> across the world.
+              </p>
+            </blockquote>
+          </div>
+
+          <ul className="mx-auto mt-14 grid max-w-6xl gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {VISION_PILLARS.map(({ icon: Icon, title, text }) => (
+              <li key={title} className="rounded-2xl border border-[#E8C98D]/25 bg-white/[0.06] p-6 backdrop-blur-sm transition-colors hover:border-[#E8C98D]/60 hover:bg-white/[0.1]">
+                <span className="grid size-12 place-items-center rounded-full bg-[#E8C98D]/15 text-[#E8C98D]">
+                  <Icon aria-hidden="true" className="size-6" strokeWidth={1.75} />
+                </span>
+                <h3 className="mt-5 font-serif text-xl">{title}</h3>
+                <p className="mt-2 text-sm leading-6 text-white/75">{text}</p>
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
 
@@ -202,6 +272,50 @@ export default function Home() {
               This website does not accept manuscript uploads. Please send a brief enquiry first and share a complete manuscript only if requested.
             </p>
           </aside>
+        </div>
+      </section>
+
+      <section id="network" aria-label="Academic network" className="scroll-mt-28 bg-[#F7F4ED] px-6 py-20 lg:px-10">
+        <div className="mx-auto grid max-w-[1440px] gap-12 lg:grid-cols-2 lg:gap-0 lg:divide-x lg:divide-[#B9975B]/50">
+          <div className="flex gap-5 lg:pr-16">
+            <Users aria-hidden="true" className="mt-1 size-10 shrink-0 text-[#681F2A] sm:size-12" strokeWidth={1.5} />
+            <div>
+              <h2 className="font-serif text-3xl leading-tight text-[#681F2A] sm:text-4xl">Join Our Academic Network</h2>
+              <p className="mt-3 max-w-xl text-base leading-7 text-[#3D3D3D]">
+                Be part of a growing community of scholars and experts. We invite expressions of interest from:
+              </p>
+              <ul className="mt-4 space-y-2">
+                {NETWORK_ROLES.map((role) => (
+                  <li key={role} className="flex items-center gap-3 text-base text-[#111111]">
+                    <Check aria-hidden="true" className="size-5 shrink-0 text-[#681F2A]" strokeWidth={2.5} />
+                    {role}
+                  </li>
+                ))}
+              </ul>
+              <a
+                href={REGISTER_INTEREST_HREF}
+                className="mt-7 inline-flex min-h-12 items-center gap-3 rounded-lg bg-[#681F2A] px-7 py-3 font-serif text-lg text-white shadow-[0_8px_20px_rgba(104,31,42,0.25)] hover:bg-[#42131A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#681F2A]"
+              >
+                Register Your Interest
+                <ChevronRight aria-hidden="true" className="size-5" />
+              </a>
+            </div>
+          </div>
+
+          <div className="flex gap-5 lg:pl-16">
+            <Award aria-hidden="true" className="mt-1 size-10 shrink-0 text-[#681F2A] sm:size-12" strokeWidth={1.5} />
+            <div>
+              <h2 className="font-serif text-3xl leading-tight text-[#681F2A] sm:text-4xl">Why Publish With Veda?</h2>
+              <ul className="mt-5 space-y-3">
+                {PUBLISH_REASONS.map((reason) => (
+                  <li key={reason} className="flex items-start gap-3 text-base leading-7 text-[#111111]">
+                    <Check aria-hidden="true" className="mt-1 size-5 shrink-0 text-[#681F2A]" strokeWidth={2.5} />
+                    {reason}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
         </div>
       </section>
 

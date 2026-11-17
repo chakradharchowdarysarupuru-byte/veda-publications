@@ -136,9 +136,9 @@ export default function BooksPage() {
           <div className="flex items-center gap-3 border-l-2 border-[#B9975B] pl-4 md:mb-2">
             <BookOpen aria-hidden="true" className="size-6 shrink-0 text-[#681F2A]" />
             <div>
-              <p className="font-serif text-2xl">{books.length}</p>
+              <p className="font-serif text-2xl">700+</p>
               <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#6B675F]">
-                {books.length === 1 ? "Published title" : "Published titles"}
+                Published titles
               </p>
             </div>
           </div>
