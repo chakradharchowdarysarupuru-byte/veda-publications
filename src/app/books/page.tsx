@@ -205,10 +205,10 @@ function BooksPageContent() {
                 tabIndex={activeTab === tab.id ? 0 : -1}
                 onClick={() => selectTab(tab.id)}
                 onKeyDown={handleTabKeyDown}
-                className={`min-h-11 rounded-full px-6 py-2 text-xs font-semibold uppercase tracking-[0.12em] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#681F2A] ${
+                className={`min-h-11 rounded-full px-6 py-2 text-xs font-semibold uppercase tracking-[0.12em] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-action ${
                   activeTab === tab.id
-                    ? "bg-[#681F2A] text-white"
-                    : "border border-[#6B675F] text-[#5F5A52] hover:border-[#681F2A] hover:text-[#681F2A]"
+                    ? "bg-action text-white hover:bg-action-hover"
+                    : "border border-action/50 text-action hover:bg-action hover:text-white"
                 }`}
               >
                 {tab.label}
@@ -248,8 +248,8 @@ function BooksPageContent() {
                   onClick={() => setCategory(item)}
                   className={`min-h-11 shrink-0 whitespace-nowrap rounded-full px-4 py-2 text-xs font-semibold uppercase tracking-[0.12em] ${
                     category === item
-                      ? "bg-[#681F2A] text-white"
-                      : "border border-[#6B675F] text-[#5F5A52] hover:border-[#681F2A] hover:text-[#681F2A]"
+                      ? "bg-action text-white hover:bg-action-hover"
+                      : "border border-action/50 text-action hover:bg-action hover:text-white"
                   }`}
                 >
                   {item}
@@ -282,7 +282,7 @@ function BooksPageContent() {
                 <button
                   type="button"
                   onClick={() => { setSearch(""); setCategory("All"); }}
-                  className="mt-6 inline-flex min-h-11 items-center gap-2 rounded-full bg-[#681F2A] px-5 py-3 text-xs font-semibold uppercase tracking-[0.1em] text-white hover:bg-[#521821]"
+                  className="mt-6 inline-flex min-h-11 items-center gap-2 rounded-full bg-action px-5 py-3 text-xs font-semibold uppercase tracking-[0.1em] text-white hover:bg-action-hover"
                 >
                   <X aria-hidden="true" className="size-4" />
                   Clear filters
@@ -301,7 +301,7 @@ function BooksPageContent() {
                   <button
                     type="button"
                     onClick={() => { setSearch(""); setCategory("All"); }}
-                    className="inline-flex min-h-9 items-center gap-1.5 text-xs font-semibold uppercase tracking-[0.1em] text-[#681F2A] underline underline-offset-4 hover:text-[#42131A]"
+                    className="inline-flex min-h-9 items-center gap-1.5 text-xs font-semibold uppercase tracking-[0.1em] text-action underline underline-offset-4 hover:text-action-hover"
                   >
                     Clear filters <X aria-hidden="true" className="size-4" />
                   </button>
@@ -341,7 +341,7 @@ function BooksPageContent() {
                       <button
                         type="button"
                         onClick={(event) => openAbstract(book, event.currentTarget)}
-                        className="mt-6 inline-flex min-h-11 w-fit items-center gap-2 rounded-full border border-[#681F2A]/50 px-5 py-2 text-xs font-semibold uppercase tracking-[0.1em] text-[#681F2A] hover:bg-[#681F2A] hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#681F2A]"
+                        className="mt-6 inline-flex min-h-11 w-fit items-center gap-2 rounded-full border border-action/50 px-5 py-2 text-xs font-semibold uppercase tracking-[0.1em] text-action hover:bg-action hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-action"
                       >
                         Read abstract <ArrowRight aria-hidden="true" className="size-4" />
                       </button>
@@ -406,7 +406,7 @@ function BooksPageContent() {
                 type="button"
                 onClick={() => setSelectedBook(null)}
                 aria-label="Close abstract"
-                className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[#6B675F] text-xl hover:bg-[#111111]/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#681F2A]"
+                className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-action/50 text-xl text-action hover:bg-action hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-action"
               >
                 ×
               </button>
@@ -426,7 +426,7 @@ function BooksPageContent() {
             <div className="mt-8 flex flex-wrap gap-3">
               <a
                 href={getBookContactHref(selectedBook)}
-                className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-[#681F2A] px-6 py-3 text-xs font-semibold uppercase tracking-[0.12em] text-white hover:bg-[#521821] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#681F2A]"
+                className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-action px-6 py-3 text-xs font-semibold uppercase tracking-[0.12em] text-white hover:bg-action-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-action"
               >
                 <Mail aria-hidden="true" className="size-4" />
                 Email to enquire about ordering
@@ -437,7 +437,7 @@ function BooksPageContent() {
                   href={selectedBookWhatsAppHref}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-[#6B675F] px-6 py-3 text-xs font-semibold uppercase tracking-[0.12em] hover:border-[#681F2A] hover:text-[#681F2A]"
+                  className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-action/50 px-6 py-3 text-xs font-semibold uppercase tracking-[0.12em] text-action hover:bg-action hover:text-white"
                 >
                   <MessageCircle aria-hidden="true" className="size-4" />
                   WhatsApp

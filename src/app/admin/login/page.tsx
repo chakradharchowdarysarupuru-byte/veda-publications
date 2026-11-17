@@ -55,7 +55,7 @@ export default function ChiefEditorLoginPage() {
               maxLength={254}
               value={email}
               onChange={(event) => setEmail(event.target.value)}
-              className="mt-2 w-full rounded-lg border border-[#6B675F] bg-white px-4 py-3 text-sm outline-none focus:border-[#681F2A] focus:ring-2 focus:ring-[#681F2A]/20"
+              className="mt-2 w-full rounded-lg border border-[#6B675F] bg-white px-4 py-3 text-sm outline-none focus:border-action focus:ring-2 focus:ring-action/20"
             />
           </div>
           <div>
@@ -68,10 +68,10 @@ export default function ChiefEditorLoginPage() {
               maxLength={200}
               value={password}
               onChange={(event) => setPassword(event.target.value)}
-              className="mt-2 w-full rounded-lg border border-[#6B675F] bg-white px-4 py-3 text-sm outline-none focus:border-[#681F2A] focus:ring-2 focus:ring-[#681F2A]/20"
+              className="mt-2 w-full rounded-lg border border-[#6B675F] bg-white px-4 py-3 text-sm outline-none focus:border-action focus:ring-2 focus:ring-action/20"
             />
           </div>
-          <button type="submit" disabled={submitting} className="min-h-12 w-full rounded-full bg-[#681F2A] px-5 py-3 text-sm font-semibold text-white hover:bg-[#521821] disabled:opacity-60">
+          <button type="submit" disabled={submitting} className="min-h-12 w-full rounded-full bg-action px-5 py-3 text-sm font-semibold text-white hover:bg-action-hover disabled:opacity-60">
             {submitting ? "Signing in…" : "Sign in"}
           </button>
         </form>

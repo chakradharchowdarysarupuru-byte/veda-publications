@@ -39,7 +39,7 @@ export default function JournalCard({ journal }: { journal: Journal }) {
         href={journal.website}
         target="_blank"
         rel="noopener noreferrer"
-        className="mt-5 inline-flex min-h-11 items-center gap-2 self-end whitespace-nowrap rounded-full bg-[#681F2A] px-5 py-2 text-xs font-semibold uppercase tracking-[0.1em] text-white hover:bg-[#42131A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#681F2A]"
+        className="mt-5 inline-flex min-h-11 items-center gap-2 self-end whitespace-nowrap rounded-full bg-action px-5 py-2 text-xs font-semibold uppercase tracking-[0.1em] text-white hover:bg-action-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-action"
       >
         Visit Journal
         <span className="sr-only"> (opens in a new tab)</span>

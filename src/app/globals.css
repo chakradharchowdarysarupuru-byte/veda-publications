@@ -1,5 +1,21 @@
 @import "tailwindcss";
 
+@theme {
+  --color-action: #004B8D;
+  --color-action-hover: #003A6E;
+  --animate-twinkle: twinkle 2.6s ease-in-out infinite;
+
+  @keyframes fade-in {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes twinkle {
+    0%, 100% { opacity: 0.35; transform: scale(0.75); }
+    50% { opacity: 1; transform: scale(1); }
+  }
+}
+
 :root {
   --veda-ink: #111111;
   --veda-ivory: #f7f4ed;

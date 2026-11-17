@@ -31,7 +31,7 @@ const emptyBook: BookFields = {
 };
 
 const inputClass =
-  "mt-2 w-full rounded-lg border border-[#6B675F] bg-white px-4 py-3 text-sm outline-none focus:border-[#681F2A] focus:ring-2 focus:ring-[#681F2A]/20";
+  "mt-2 w-full rounded-lg border border-[#6B675F] bg-white px-4 py-3 text-sm outline-none focus:border-action focus:ring-2 focus:ring-action/20";
 const labelClass = "text-sm font-medium text-[#3D3D3D]";
 const COVER_TYPES = ["image/jpeg", "image/png", "image/webp"];
 const COVER_MAX_BYTES = 4 * 1024 * 1024;
@@ -298,7 +298,7 @@ export default function AdminBooksPage() {
               Create and maintain book records. Only published titles appear in the public catalogue.
             </p>
           </div>
-          <button type="button" onClick={handleLogout} className="min-h-11 rounded-full border border-[#6B675F] px-5 py-2 text-sm hover:border-[#681F2A] hover:text-[#681F2A]">
+          <button type="button" onClick={handleLogout} className="min-h-11 rounded-full border border-action/50 text-action px-5 py-2 text-sm hover:bg-action hover:text-white">
             Sign out
           </button>
         </div>
@@ -329,7 +329,7 @@ export default function AdminBooksPage() {
               <label className={labelClass} htmlFor="book-cover">Cover image</label>
               <div className="flex flex-wrap items-start gap-3">
                 <input id="book-cover" aria-describedby="book-cover-help" className={`${inputClass} min-w-0 flex-1`} value={form.coverImageUrl} onChange={(event) => setForm({ ...form, coverImageUrl: event.target.value })} placeholder="/books/cover.webp" maxLength={1000} />
-                <label className={`mt-2 inline-flex min-h-11 items-center rounded-full bg-[#681F2A] px-5 py-3 text-sm font-semibold text-white focus-within:ring-2 focus-within:ring-[#681F2A] focus-within:ring-offset-2 ${uploadingCover ? "opacity-60" : "cursor-pointer hover:bg-[#521821]"}`}>
+                <label className={`mt-2 inline-flex min-h-11 items-center rounded-full bg-action px-5 py-3 text-sm font-semibold text-white focus-within:ring-2 focus-within:ring-action focus-within:ring-offset-2 ${uploadingCover ? "opacity-60" : "cursor-pointer hover:bg-action-hover"}`}>
                   <input type="file" accept="image/jpeg,image/png,image/webp" className="sr-only" onChange={(event) => void handleCoverFile(event)} disabled={uploadingCover} />
                   {uploadingCover ? "Uploading…" : "Upload cover"}
                 </label>
@@ -360,11 +360,11 @@ export default function AdminBooksPage() {
               </select>
             </div>
             <div className="flex flex-wrap items-end gap-3">
-              <button type="submit" disabled={submitting} className="min-h-11 rounded-full bg-[#681F2A] px-6 py-3 text-sm font-semibold text-white hover:bg-[#521821] disabled:opacity-60">
+              <button type="submit" disabled={submitting} className="min-h-11 rounded-full bg-action px-6 py-3 text-sm font-semibold text-white hover:bg-action-hover disabled:opacity-60">
                 {submitting ? "Saving…" : editingId ? "Save changes" : "Add book"}
               </button>
               {editingId && (
-                <button type="button" onClick={resetForm} className="min-h-11 rounded-full border border-[#6B675F] px-5 py-3 text-sm hover:border-[#681F2A] hover:text-[#681F2A]">
+                <button type="button" onClick={resetForm} className="min-h-11 rounded-full border border-action/50 text-action px-5 py-3 text-sm hover:bg-action hover:text-white">
                   Cancel edit
                 </button>
               )}
@@ -399,7 +399,7 @@ export default function AdminBooksPage() {
                   </div>
                 </div>
                 <div className="flex shrink-0 gap-2">
-                  <button type="button" onClick={() => handleEdit(book)} className="min-h-11 rounded-full border border-[#6B675F] px-4 text-sm hover:border-[#681F2A] hover:text-[#681F2A]">
+                  <button type="button" onClick={() => handleEdit(book)} className="min-h-11 rounded-full border border-action/50 text-action px-4 text-sm hover:bg-action hover:text-white">
                     Edit
                   </button>
                   <button type="button" onClick={() => void handleDelete(book)} disabled={Boolean(deletingId)} className="min-h-11 rounded-full border border-red-800 px-4 text-sm text-red-800 hover:bg-red-50 disabled:opacity-60">
