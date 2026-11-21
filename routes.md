@@ -9,6 +9,7 @@
 - /admin/books — Chief Editor catalogue management.
 - /login — redirects to /admin/login.
 - /cart and /checkout — redirect to /books; no order flow is implemented.
+- Legacy WordPress links (`/?page_id=N`, `/?p=N`, `/index.php`) — 308 redirects in `src/proxy.ts`: About→/#about, Contact→/#contact, Publications→/books, ISBN pages→/#submissions, Call for chapters→/calls.
 
 ## Backend API (port 5000 in container; host port 5001 in local Compose)
 - Vercel routes `/api/*` to the backend service; all other public paths go to the frontend service.
